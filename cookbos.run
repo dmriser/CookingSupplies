@@ -1,0 +1,42 @@
+#!/bin/tcsh -f
+
+set file   = $1
+set logDir = "/volatile/clas/clas12/dmriser/analysis/ef1_analysis/rec_out/log"
+set rzn    = `ls *.rzn | wc -l | awk '{print $1}'`
+
+source /site/clas/builds/environment.csh
+#source /site/common_environment/set_environment /site/common_environment/jlab_default_settings.dat clas -v
+setenv CLAS_CALDB_RUNINDEX calib_user.RunIndexe1f
+echo $CLAS_CALDB_RUNINDEX
+echo $CLAS_PARMS
+
+# linking exes
+alias user_ana    /lustre/expphy/volatile/clas/clas12/fcao/data/clas6/e1f/cookScripts/kjuser_ana	
+#alias nt22maker   /lustre/expphy/volatile/clas/clas12/fcao/data/clas6/e1f/cookScripts/nt22maker_dvcs
+alias nt22maker   /u/home/dmriser/mydoc/cooking_supplies/nt22maker_dvcs	# updated ver
+alias hel_bos     /u/home/dmriser/mydoc/cooking_supplies/hel_bos/build/bin/hel_bos
+#alias print_banks /u/home/dmriser/mydoc/analysis/utils/print_banks
+
+mv datafile.bos Input
+#hel_bos -pInput likeabos
+#print_banks likeabos
+#print_banks Input
+
+echo "working on file $file"
+echo "<chef> initialized" > $logDir/$file.log 
+user_ana -t recsis_e1f_data.tcl >& /dev/null  	       # This line cooks the raw bos file, Input, and makes a file named cooked.bos. 
+echo "<chef> user_ana done" >> $logDir/$file.log
+
+#if($rzn > 0)then
+#     hel_bos -pout.bos cooked.bos >> $logDir/$file.log
+#else
+#     hel_bos -D -pout.bos cooked.bos >> $logDir/$file.log
+#endif
+echo "<chef> success" >> $logDir/$file.log
+
+echo "> user_ana has finished! "
+nt22maker					       # This line finds the files n10 files that are named histfile and convert nt22
+ls -lh
+echo "> nt22maker has finished! "
+h2root dstfile.hbook h22file.root 		       # This line takes the nt22 files and converts them into root files
+

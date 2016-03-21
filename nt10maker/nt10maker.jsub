@@ -1,0 +1,10 @@
+JOBNAME: nt10maker_e1b
+PROJECT: clas
+COMMAND: /group/uva/kjoo/packages/nt10maker_e1b/nt10maker_e1b.pl
+OPTIONS: 
+MAIL: kjoo@jlabs1.cebaf.gov
+#OS: solaris
+#OS: aix
+OS: linux
+
+

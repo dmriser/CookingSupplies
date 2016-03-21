@@ -1,0 +1,15 @@
+JOBNAME:    elast_gen_e1f
+OS:         centos65 
+MEMORY:     1024 MB
+DISK_SPACE: 1024 MB
+TRACK:      simulation
+PROJECT:    e1f
+
+COMMAND: chmod +x goGenerate; ./goGenerate jobidnum
+
+OTHER_FILES: 
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/goGenerate
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/elastic/e1f.inp
+
+OUTPUT_DATA:     elast_gen.evt
+OUTPUT_TEMPLATE: /volatile/clas/clas12/dmriser/analysis/mcdata/generated/elastic_correct_vz/elastic.jobidnum.bos 

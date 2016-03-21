@@ -1,0 +1,32 @@
+#!/bin/tcsh -f
+
+
+
+setenv CLAS_CALDB_RUNINDEX calib_user.RunIndexe1f
+source /group/clas/builds/environment.csh
+
+set f = 0.75
+
+if ($1 != "") then
+    set f = $1
+endif
+
+set gpp      = 1.3819
+set mainPath = "/u/home/dmriser/mydoc/cooking_supplies"
+
+alias gpp_2008  $mainPath/mc_tools/gpp_2008 
+alias user_ana  /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/kjuser_ana
+alias nt22maker /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/NEWnt22maker 
+
+gsim_bat -ffread ffread.in -mcin gen.bos -trig 20000 -kine 1 -bosout GSIMout.bos
+gpp_2008 -P0x1b -a$gpp -b$gpp -c$gpp -f$f -Y -R37662 -oGPPout.bos GSIMout.bos
+mv GPPout.bos Input 
+user_ana -t recsis_e1f_MC.tcl >& /dev/null
+nt22maker --mc 2
+
+# to get h2root 
+source /group/clas12/environment.csh 
+
+h2root dstfile.hbook out.root
+
+mv Input GPPout.bos 
