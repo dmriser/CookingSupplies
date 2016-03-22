@@ -1,0 +1,7 @@
+#!/bin/tcsh 
+
+set files = `ls /volatile/clas/clas12/dmriser/analysis/ef1_analysis/rec_out/cooked.*.bos | cut -d'.' -f2 | sort | uniq`
+
+foreach file ($files)
+	ls -lh /mss/clas/e1f/data/$file*
+end

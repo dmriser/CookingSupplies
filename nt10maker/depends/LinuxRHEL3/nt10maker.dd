@@ -1,0 +1,9 @@
+./depends/LinuxRHEL3/nt10maker.dd /home/gohn/top_dir/lib/LinuxRHEL3/nt10maker.o:  nt10maker.cc \
+  /group/clas/builds/PRODUCTION/packages/include/ntypes.h \
+  /group/clas/builds/PRODUCTION/packages/include/bostypes.h \
+  /group/clas/builds/PRODUCTION/packages/include/bosddl.h \
+  /group/clas/builds/PRODUCTION/packages/include/clas_cern.h \
+  /group/clas/builds/PRODUCTION/packages/include/utility.h \
+  /group/clas/builds/PRODUCTION/packages/include/makebanks.h \
+  /group/clas/builds/PRODUCTION/packages/include/trip.h \
+  /group/clas/builds/PRODUCTION/packages/include/vertex.h

@@ -1,0 +1,30 @@
+JOBNAME: recook
+PROJECT: E1F
+OS: centos65
+MEMORY: 4000 MB
+DISK_SPACE: 4000 MB
+TRACK: reconstruction 
+
+COMMAND: ./cookbos.run
+
+OTHER_FILES:
+/u/home/dmriser/mydoc/cooking_supplies/cookbos.run
+/u/home/dmriser/mydoc/cooking_supplies/recsis_e1f_data.tcl
+/volatile/clas/clas12/dmriser/analysis/ef1_analysis/helfiles/hel37670.rzn
+
+OUTPUT_DATA: cooked.bos
+OUTPUT_TEMPLATE:/volatile/clas/clas12/dmriser/analysis/ef1_analysis/rec_out/cooked.*.bos
+
+OUTPUT_DATA: histfile 
+OUTPUT_TEMPLATE:/volatile/clas/clas12/dmriser/analysis/ef1_analysis/rec_out/nt10/*.nt10
+
+OUTPUT_DATA: dstfile.hbook 
+OUTPUT_TEMPLATE:/volatile/clas/clas12/dmriser/analysis/ef1_analysis/rec_out/nt22/*.nt22
+
+OUTPUT_DATA: h22file.root
+OUTPUT_TEMPLATE:/volatile/clas/clas12/dmriser/analysis/ef1_analysis/rec_out/root/*.root
+
+INPUT_DATA: datafile.bos
+INPUT_FILES:
+/mss/clas/e1f/data/clas_037670.A00
+/mss/clas/e1f/data/clas_037670.A00

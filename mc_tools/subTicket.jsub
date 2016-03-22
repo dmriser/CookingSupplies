@@ -1,0 +1,37 @@
+JOBNAME:    mc_E1F
+OS:         centos65 
+MEMORY:     1024 MB
+DISK_SPACE: 1024 MB
+TRACK:      simulation
+PROJECT:    e1f
+
+COMMAND: chmod +x goSimulate; ./goSimulate
+
+OTHER_FILES: 
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/ffread.in
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/gpp_2008
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/goSimulate
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/recsis_e1f_MC.tcl
+
+INPUT_DATA: gen.dat
+
+OUTPUT_DATA:     GPPout.bos
+OUTPUT_TEMPLATE: /volatile/clas/clas12/dmriser/analysis/mcdata/bos/*.bos 
+
+OUTPUT_DATA:     out.root
+OUTPUT_TEMPLATE: /volatile/clas/clas12/dmriser/analysis/mcdata/nt22/*.root
+
+INPUT_FILES: 
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.100.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.101.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.10.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.11.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.12.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.13.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.14.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.15.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.16.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.17.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.18.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.19.dat
+/volatile/clas/clas12/dmriser/analysis/mcdata/generated/sidis.1.dat

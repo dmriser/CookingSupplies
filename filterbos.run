@@ -1,0 +1,12 @@
+#!/bin/tcsh
+set dirIn = $1
+set dirOut = $2
+cd $dirIn
+set files = cooked.*
+foreach curFile ($files)
+	set name = $curFile
+	set split = ($name:as/./ /)
+	echo $split
+	set outcurFile = $split[2].$split[3].bos
+	/u/home/gavalian/Software/BOSsoftware/bosutilities/bosutility -filter -b "HEADHEVTEVNTSCPBECPBDCPBCCPBLCPBTGBI" -o $dirOut/filtered.$outcurFile $curFile
+end
