@@ -1,0 +1,39 @@
+GEOM 'ALL'
+
+NOGEOM 'PTG' 'ST' 'IC'
+
+MAGTYPE 3
+
+CUTS   5.e-3 5.e-3 5.e-3 5.e-3
+
+CCCUTS 1.e-3 1.e-3 1.e-3 1.e-3
+
+DCCUTS 1.e-4 1.e-4 1.e-4 1.e-4
+
+ECCUTS 1.e-4 1.e-4 1.e-4 1.e-4
+
+SCCUTS 1.e-4 1.e-4 1.e-4 1.e-4
+
+NTARGET 2
+
+MAGSCALE 0.5829 0.7495
+
+RUNG 10
+
+TARGET 'e2b'
+
+TGMATE 'PROT' 'ALU'
+
+TGPOS 0.00 0.00 -25.0
+
+NOMCDATA 'ALL'
+
+SAVE 'ALL' 'LEVL' 10
+
+KINE 5
+
+c TRIG 100000
+
+AUTO 1
+
+STOP

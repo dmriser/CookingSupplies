@@ -1,0 +1,82 @@
+#!/bin/tcsh 
+
+set nargs = $#argv
+set opt   = $1 
+
+set type  = gpp_calib_e1f
+set gpp   = 2.50
+
+##########################
+set JOB    = gpp_MC
+set TRACK  = reconstruction
+set PROJ   = e1f
+set OS     = centos65
+set MEMORY = "1024 MB"
+set DISKSP = "1024 MB"
+set TLIM   = "240"
+##########################
+
+
+if ($opt == "submit") then
+
+set ifile = 0
+
+    foreach file ($argv)
+	if ($file != $opt) then 
+	    
+	    echo "JOBNAME:    $JOB"                               > temp.sidisMC.$ifile.jsub
+	    echo "TRACK:      $TRACK"                            >> temp.sidisMC.$ifile.jsub
+	    echo "PROJECT:    $PROJ"                             >> temp.sidisMC.$ifile.jsub
+	    echo "OS:         $OS"                               >> temp.sidisMC.$ifile.jsub
+	    echo "MEMORY:     $MEMORY"                           >> temp.sidisMC.$ifile.jsub
+	    echo "DISK_SPACE: $DISKSP"                           >> temp.sidisMC.$ifile.jsub
+	    echo "TIME:       $TLIM"                             >> temp.sidisMC.$ifile.jsub
+	    echo "COMMAND: chmod +x goSimulate; ./goSimulate $ifile $gpp" >> temp.sidisMC.$ifile.jsub
+	    echo " " >> temp.sidisMC.$ifile.jsub
+	    echo "OTHER_FILES: " >> temp.sidisMC.$ifile.jsub
+	    echo "/u/home/dmriser/mydoc/cooking_supplies/mc_tools/recsis_e1f_MC.tcl" >> temp.sidisMC.$ifile.jsub
+	    echo "/u/home/dmriser/mydoc/cooking_supplies/mc_tools/ffread.in" >> temp.sidisMC.$ifile.jsub
+	    echo "/u/home/dmriser/mydoc/cooking_supplies/mc_tools/goSimulate" >> temp.sidisMC.$ifile.jsub
+	    echo "/u/home/dmriser/mydoc/cooking_supplies/mc_tools/gpp_2008" >> temp.sidisMC.$ifile.jsub
+	    echo " " >> temp.sidisMC.$ifile.jsub
+	    echo "INPUT_DATA: gen.bos"  >> temp.sidisMC.$ifile.jsub
+	    echo " "  >> temp.sidisMC.$ifile.jsub
+	    echo "OUTPUT_DATA: out.root" >> temp.sidisMC.$ifile.jsub
+	    echo "OUTPUT_TEMPLATE: /volatile/clas/clas12/dmriser/analysis/mcdata/root/$type/*.$gpp.root" >> temp.sidisMC.$ifile.jsub
+	    echo " " >> temp.sidisMC.$ifile.jsub
+	    echo "INPUT_FILES: " >> temp.sidisMC.$ifile.jsub
+	    echo $file >> temp.sidisMC.$ifile.jsub
+	endif 
+
+	jsub temp.sidisMC.$ifile.jsub
+	@ ifile++
+
+	echo " > done job $ifile"
+    end
+
+    rm temp.sidisMC.*.jsub
+
+endif
+
+if ($opt == "status") then
+
+    foreach file (`ls /volatile/clas/clas12/dmriser/analysis/mcdata/logs/*`)
+	echo `tac $file | grep -m1 ">"`
+    end
+
+endif 
+
+if ($opt == "kill") then
+    
+    foreach job (`jobstat -u dmriser | grep $JOB | awk '{print $1}'`)
+	jkill $job
+    end
+
+endif
+
+if ($opt == "clean") then 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/bos/* 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/nt22/* 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/root/* 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/logs/* 
+endif

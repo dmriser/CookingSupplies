@@ -1,0 +1,15 @@
+#!/bin/tcsh
+source /group/clas12/environment_java.csh
+set dirIn = $1
+set dirOut = $2
+
+cd $dirIn;
+set files = filtered.*
+foreach curFile ($files)
+        set name = $curFile
+        set split = ($name:as/./ /)
+        echo $split
+        set outcurFile = $split[2].$split[3]
+	bos2evio -seb $outcurFile.evio $curFile
+	mv $outcurFile.0.evio $dirOut$outcurFile.evio 
+end

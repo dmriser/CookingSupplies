@@ -1,0 +1,36 @@
+#!/bin/tcsh -f 
+
+source /group/clas/builds/environment.csh 
+
+echo 
+echo "<chef> job starting "
+echo 
+
+ln -s /u/home/dmriser/mydoc/cooking_supplies/nt10maker/build/bin/nt10maker.exe 
+ln -s /u/home/dmriser/mydoc/cooking_supplies/nt22maker_dvcs
+
+nt10maker.exe -ohistfile file.bos
+
+echo
+echo "<chef> nt10maker finished"
+echo "current files : "
+echo
+
+ls
+
+echo
+echo "====================================="
+echo
+
+
+nt22maker_dvcs
+
+echo
+echo "<chef> nt22maker_dvcs finished"
+echo
+
+h2root dstfile.hbook file.root
+
+echo
+echo "<chef> rootification finished"
+echo 
