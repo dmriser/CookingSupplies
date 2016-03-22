@@ -3,7 +3,8 @@
 
 
 setenv CLAS_CALDB_RUNINDEX calib_user.RunIndexe1f
-source /group/clas/builds/environment.csh
+
+source /group/clas/builds/centos65/environment.csh
 
 set f = 0.75
 
@@ -15,7 +16,7 @@ set gpp      = 1.3819
 set mainPath = "/u/home/dmriser/mydoc/cooking_supplies"
 
 alias gpp_2008  $mainPath/mc_tools/gpp_2008 
-alias user_ana  /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/kjuser_ana
+#alias user_ana  /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/kjuser_ana
 alias nt22maker /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/NEWnt22maker 
 
 gsim_bat -ffread ffread.in -mcin gen.bos -trig 20000 -kine 1 -bosout GSIMout.bos
