@@ -1,0 +1,19 @@
+JOBNAME:    elast_MC
+TRACK:      reconstruction
+OS:         centos65
+PROJECT:    e1f
+TIME:       720
+DISK_SPACE: 1024 MB
+MEMORY:     2048 MB
+
+COMMAND:    chmod +x goSimulateSimple; ./goSimulateSimple
+
+OTHER_FILES: 
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/goSimulateSimple
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/ffread.in
+
+INPUT_DATA: gen.bos
+OUTPUT_DATA: out.root
+OUTPUT_TEMPLATE:/volatile/clas/clas12/dmriser/analysis/mcdata/root/elastic/*.root 
+
+INPUT_FILES:/volatile/clas/clas12/dmriser/analysis/mcdata/generated/elastic/elastic.1010.bos

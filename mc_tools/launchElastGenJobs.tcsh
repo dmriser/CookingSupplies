@@ -3,7 +3,7 @@
 set n_jobs = $1 
 set c_job  = 0
 
-# if we want to start at a different number than 1, pass as arg 2
+# if we want to start at a different number than 0, pass as arg 2
 if ($2 != "") then 
     set c_job = $2
     @ n_jobs += $c_job

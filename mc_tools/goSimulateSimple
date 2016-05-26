@@ -1,33 +1,66 @@
 #!/bin/tcsh -f
 
-
-
+# Setup the environment for GSIM and USER_ANA.
 setenv CLAS_CALDB_RUNINDEX calib_user.RunIndexe1f
-
 source /group/clas/builds/centos65/environment.csh
 
-set f = 0.75
-
-if ($1 != "") then
-    set f = $1
-endif
-
-set gpp      = 1.3819
+# Get the utilities from my folders. 
 set mainPath = "/u/home/dmriser/mydoc/cooking_supplies"
-
+alias elast_gen /u/home/dmriser/mydoc/CLASSourceCode/elast_gen/bin/LinuxRHEL5/elast_gen
 alias gpp_2008  $mainPath/mc_tools/gpp_2008 
-#alias user_ana  /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/kjuser_ana
+alias user_ana  /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/kjuser_ana
 alias nt22maker /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/NEWnt22maker 
 
-gsim_bat -ffread ffread.in -mcin gen.bos -trig 20000 -kine 1 -bosout GSIMout.bos
-gpp_2008 -P0x1b -a$gpp -b$gpp -c$gpp -f$f -Y -R37662 -oGPPout.bos GSIMout.bos
-mv GPPout.bos Input 
-user_ana -t recsis_e1f_MC.tcl >& /dev/null
-nt22maker --mc 2
+# setup output based on input from command
+set OUTDIR = $1 
+set PROJ   = $2 
+
+# create outdir if it doesn't exist 
+mkdir -p $OUTDIR/$PROJ
+
+set JOBNUMBER = `getJobNumber $OUTDIR $PROJ`
+echo " DOING JOB NUMBER $JOBNUMBER "
+echo " "
+mkdir -p $OUTDIR/$PROJ/JOB_$JOBNUMBER
+
+# Begin processing the job.
+echo " ------------ STARTING JOB ------------ " > $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " gen:       " `which elast_gen`                 >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " GSIM:      " `which gsim_bat`            >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " GPP:       " `which gpp_2008`            >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " USER_ANA:  " `which user_ana`            >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " nt22maker: " `which nt22maker`           >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " ------------------------------------- "  >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
+
+
+elast_gen < e1f.inp
+mv elast_gen.evt gen.bos                         >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " ------------ EVENT GEN DONE ----------- " >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+ls -lh >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
+
+
+gsim_bat -ffread ffread.in -mcin gen.bos -trig 9999 -kine 1 -bosout GSIMout.bos >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " ------------ GSIM DONE ----------------"  >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+countbos GSIMout.bos                             >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+
+gpp_2008 -P0x1b -a1.3819 -b1.3819 -c1.3819 -f0.75 -Y -R37662 -oGPPout.bos GSIMout.bos >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
+mv GPPout.bos Input  
+countbos Input                                                                        >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " ------------ DOCA SMEARING DONE --------- "                                    >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+
+user_ana -t recsis_e1f_MC.tcl                                                         >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+nt22maker --mc 2                                                                      >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+
+echo " ----------- RECONSTRUCTION DONE ------------ "                                 >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 
 # to get h2root 
 source /group/clas12/environment.csh 
+h2root dstfile.hbook out.root                                                        >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 
-h2root dstfile.hbook out.root
+# send output to folder 
+cp out.root $OUTDIR/$PROJ/JOB_$JOBNUMBER/$JOBNUMBER.root
+cp e1f.inp  $OUTDIR/$PROJ/JOB_$JOBNUMBER/e1f.inp
 
-mv Input GPPout.bos 
+
+
+

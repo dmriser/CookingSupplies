@@ -82,10 +82,10 @@ if ($opt == "kill") then
 endif
 
 if ($opt == "clean") then 
-    rm /volatile/clas/clas12/dmriser/analysis/mcdata/bos/* 
-    rm /volatile/clas/clas12/dmriser/analysis/mcdata/nt22/* 
-    rm /volatile/clas/clas12/dmriser/analysis/mcdata/root/* 
-    rm /volatile/clas/clas12/dmriser/analysis/mcdata/logs/* 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/bos/$type/* 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/nt22/$type/* 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/root/$type/* 
+    rm /volatile/clas/clas12/dmriser/analysis/mcdata/logs/$type/* 
 endif
 
 if ($opt == "cleanlogs") then 
