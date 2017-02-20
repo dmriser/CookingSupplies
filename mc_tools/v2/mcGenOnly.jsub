@@ -1,0 +1,15 @@
+JOBNAME:     MCDebug29
+TRACK:       simulation
+OS:          centos65
+PROJECT:     e1f
+TIME:        720
+DISK_SPACE:  1024 MB
+MEMORY:      2048 MB
+MULTI_JOBS:  20
+
+COMMAND:    chmod +x goGenerate; ./goGenerate /volatile/clas/clas12/dmriser/analysis/mcdata elast_gen AramCheckJobs
+
+OTHER_FILES: 
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/v2/goGenerate
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/v2/getJobNumber
+/volatile/clas/clas12/dmriser/temp/elast_gen_test/test.inp 

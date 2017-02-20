@@ -1,16 +1,12 @@
 #!/bin/tcsh -f
 
-cp e1f*.inp e1f.inp
-
 # Setup the environment for GSIM and USER_ANA.
 setenv CLAS_CALDB_RUNINDEX calib_user.RunIndexe1f
 source /group/clas/builds/centos65/environment.csh
 
 # Get the utilities from my folders. 
 set mainPath = "/u/home/dmriser/mydoc/cooking_supplies"
-alias elast_gen /u/home/dmriser/mydoc/CLASSourceCode/elast_gen/bin/LinuxRHEL5/elast_gen
-alias keppel_rad /u/home/dmriser/mydoc/CLASSourceCode/keppel_rad/keppel_rad
-alias dis_gen /u/home/dmriser/mydoc/CLASSourceCode/clasdis/clasdis
+alias dis_gen /u/home/dmriser/mydoc/CLASSourceCode/keppel_rad/keppel_rad
 alias gpp_2008  $mainPath/mc_tools/gpp_2008 
 alias user_ana  /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/kjuser_ana
 alias nt22maker /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/NEWnt22maker 
@@ -23,13 +19,13 @@ set PROJ   = $2
 mkdir -p $OUTDIR/$PROJ
 
 set JOBNUMBER = `getJobNumber $OUTDIR $PROJ`
-echo " DOING JOB NUMBER $JOBNUMBER "
+echo " - - - - - - - - - - - -  DOING JOB NUMBER $JOBNUMBER - - - - - - - - - "
 echo " "
 mkdir -p $OUTDIR/$PROJ/JOB_$JOBNUMBER
 
 # Begin processing the job.
 echo " ------------ STARTING JOB ------------ " > $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
-echo " gen:       " `which elast_gen`                 >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+echo " gen:       " `which dis_gen`             >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 echo " GSIM:      " `which gsim_bat`            >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 echo " GPP:       " `which gpp_2008`            >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 echo " USER_ANA:  " `which user_ana`            >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
@@ -37,20 +33,21 @@ echo " nt22maker: " `which nt22maker`           >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/
 echo " ------------------------------------- "  >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
 
 
-#dis_gen --trig 1000 --datf --outform 2 --beam 5498 --zpos -250 --zwidth 25 --t 5 60 --parl3 0.7 --lst15 145 --path ./TEST_ --parj33 0.3 >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
-#elast_gen < e1f.inp
-keppel_rad < e1f.inp
+# link pdfs for disgen 
+#ln -s /u/home/dmriser/mydoc/CLASSourceCode/clasdis/  
+#ln -s /u/home/dmriser/mydoc/CLASSourceCode/clasdis/pdf/
+#dis_gen --trig 20000 --datf --outform 2 --beam 5498 --zpos -250 --zwidth 25 --t 5 60 --parl3 0.7 --lst15 145 --path ./TEST_ --parj33 0.3 >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
+dis_gen < e1f_keppel_rad.inp 
 
-#mv $GEN_OUT gen.dat >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
-#mv elast_gen.evt gen.bos                         >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
-mv keppel_rad.evt gen.bos                         >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+set GEN_OUT = `ls *.dat`
+mv $GEN_OUT gen.dat >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+
 echo " ------------ EVENT GEN DONE ----------- " >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 ls -lh >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
 
 countbos gen.bos 
+gsim_bat -ffread ffread.in -lund gen.dat -trig 20000 -kine 5 -bosout GSIMout.bos >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 
-#gsim_bat -ffread ffread.in -lund gen.dat -trig 20000 -kine 5 -bosout GSIMout.bos >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
-gsim_bat -ffread ffread.in -mcin gen.bos -trig 9999 -kine 1 -bosout GSIMout.bos >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 echo " ------------ GSIM DONE ----------------"  >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 countbos GSIMout.bos                             >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
 
@@ -70,7 +67,7 @@ h2root dstfile.hbook out.root                                                   
 
 # send output to folder 
 cp out.root $OUTDIR/$PROJ/JOB_$JOBNUMBER/$JOBNUMBER.root
-cp e1f.inp  $OUTDIR/$PROJ/JOB_$JOBNUMBER/e1f.inp
+#cp e1f.inp  $OUTDIR/$PROJ/JOB_$JOBNUMBER/e1f.inp
 
 
 

@@ -2,9 +2,12 @@
 
 set INDIR  = $1
 set OUTDIR = $2
+set NAME   = $3 
 
 set files = `ls $INDIR/*/*.root`
+set cfile = 0
 
 foreach file ($files)
-	mv $file $OUTDIR/
+	mv $file $OUTDIR/$NAME.$cfile.root
+	@ cfile++
 end

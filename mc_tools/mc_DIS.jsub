@@ -1,0 +1,17 @@
+JOBNAME:    full_MC
+TRACK:      reconstruction
+OS:         centos65
+PROJECT:    e1f
+TIME:       720
+DISK_SPACE: 1024 MB
+MEMORY:     2048 MB
+MULTI_JOBS: 5000 
+
+COMMAND:    chmod +x goSimulateDIS; ./goSimulateDIS /volatile/clas/clas12/dmriser/analysis/mcdata DIS_PASS_0
+
+OTHER_FILES: 
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/goSimulateDIS
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/getJobNumber
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/ffread.in
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/recsis_e1f_MC.tcl 
+

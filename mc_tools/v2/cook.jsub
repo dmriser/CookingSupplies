@@ -1,0 +1,23 @@
+JOBNAME:     fullMonteCarlo
+TRACK:       simulation
+OS:          centos65
+PROJECT:     e1f
+TIME:        240
+DISK_SPACE:  1024 MB
+MEMORY:      2048 MB
+
+COMMAND:    chmod +x goCook; ./goCook
+
+OTHER_FILES: 
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/v2/goCook
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/ffread.in
+/u/home/dmriser/mydoc/cooking_supplies/mc_tools/recsis_e1f_MC.tcl 
+
+OUTPUT_DATA: out.root 
+OUTPUT_TEMPLATE: /volatile/clas/clas12/dmriser/analysis/mcdata/elasticSub/root/*.root
+
+INPUT_DATA: gen.bos
+INPUT_FILES: 
+/volatile/clas/clas12/dmriser/analysis/mcdata/genBoth_0/JOB_1/elast_gen.evt
+
+

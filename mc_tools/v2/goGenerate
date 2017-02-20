@@ -1,0 +1,46 @@
+#!/bin/tcsh -f
+
+# Setup the environment for GSIM and USER_ANA.
+setenv CLAS_CALDB_RUNINDEX calib_user.RunIndexe1f
+source /group/clas/builds/centos65/environment.csh
+
+# Get the utilities from my folders. 
+set mainPath = "/u/home/dmriser/mydoc/cooking_supplies"
+
+alias keppel_rad   /u/home/dmriser/mydoc/CLASSourceCode/keppel_rad/keppel_rad
+alias keppel_norad /u/home/dmriser/mydoc/CLASSourceCode/keppel_norad/keppel_norad
+alias elast_gen    /u/home/dmriser/mydoc/CLASSourceCode/elast_gen/elast_gen
+
+# setup output based on input from command
+set OUTDIR = $1
+set GEN    = $2 
+set PROJ   = $3 
+
+# create outdir if it doesn't exist 
+mkdir -p $OUTDIR/$PROJ
+
+set JOBNUMBER = `getJobNumber $OUTDIR $PROJ`
+echo " DOING JOB NUMBER $JOBNUMBER "
+echo " "
+mkdir -p $OUTDIR/$PROJ/JOB_$JOBNUMBER
+
+# If we're using keppel_rad 
+if ($GEN == "keppel_rad") then 
+    cp e1*.inp e1f.inp
+    keppel_rad < e1f.inp
+endif
+
+# If we're using elast_gen
+if ($GEN == "elast_gen") then 
+    cp *.inp e1f.inp
+    elast_gen < e1f.inp
+    h2root elast_gen.rz 
+    mv elast_gen.root out.root
+endif
+
+
+# send output to folder 
+cp e1f.inp        $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+cp out.root       $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+
+

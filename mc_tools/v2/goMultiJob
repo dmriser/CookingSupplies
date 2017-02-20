@@ -1,0 +1,25 @@
+#!/bin/tcsh -f
+
+# setup environemt here with your source 
+# source /group/clas12/environment.csh 
+
+# setup output based on input from command
+set OUTDIR = $1
+set GEN    = $2 
+set PROJ   = $3 
+
+# create outdir if it doesn't exist 
+mkdir -p $OUTDIR/$PROJ
+
+set JOBNUMBER = `getJobNumber $OUTDIR $PROJ`
+echo " DOING JOB NUMBER $JOBNUMBER "
+echo " "
+mkdir -p $OUTDIR/$PROJ/JOB_$JOBNUMBER
+
+# GEMC command goes here 
+# gemc -OPTIONS
+
+# send output to folder 
+cp out.evio       $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+
+

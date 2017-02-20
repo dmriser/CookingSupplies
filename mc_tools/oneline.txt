@@ -1,0 +1,6 @@
+
+
+//////////////////////
+
+for getting status of running mc jobs 
+cat /path/to/jobs/*/*.log | grep DONE | sort | uniq -c

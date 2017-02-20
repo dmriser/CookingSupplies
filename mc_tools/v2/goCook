@@ -1,0 +1,41 @@
+#!/bin/tcsh -f
+
+# Setup the environment for GSIM and USER_ANA.
+setenv CLAS_CALDB_RUNINDEX calib_user.RunIndexe1f
+source /group/clas/builds/centos65/environment.csh
+
+# Get the utilities from my folders. 
+set mainPath = "/u/home/dmriser/mydoc/cooking_supplies"
+
+alias gpp_2008  $mainPath/mc_tools/gpp_2008 
+alias user_ana  /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/kjuser_ana
+alias nt22maker /volatile/clas/clas12/dmriser/analysis/ef1_analysis/temp/NEWnt22maker 
+
+# If we're using keppel_norad 
+#    gsim_bat -ffread ffread.in -lund events.dat -trig 30000 -kine 5 -bosout GSIMout.bos >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log
+gsim_bat -ffread ffread.in -mcin gen.bos -trig 9999 -kine 1 -bosout GSIMout.bos
+    
+# my values 
+#gpp_2008 -P0x1b -a1.3819 -b1.3819 -c1.3819 -f0.75 -Y -R37662 -oGPPout.bos GSIMout.bos >> $OUTDIR/$PROJ/JOB_$JOBNUMBER/mc.log 
+# nathans values 
+gpp_2008 -P0x1b -a2.5 -b2.5 -c2.5 -f0.85 -Y -R37662 -oGPPout.bos GSIMout.bos 
+mv GPPout.bos Input  
+countbos Input                                                               
+user_ana -t recsis_e1f_MC.tcl                                                
+nt22maker --mc 2                                                             
+
+
+# to get h2root 
+source /group/clas12/environment.csh 
+h2root dstfile.hbook out.root                                                
+
+# send output to folder 
+#cp out.root $OUTDIR/$PROJ/JOB_$JOBNUMBER/$JOBNUMBER.root
+#cp genEvents.root $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+#cp e1f.inp  $OUTDIR/$PROJ/JOB_$JOBNUMBER/e1f.inp
+#cp *.gen    $OUTDIR/$PROJ/JOB_$JOBNUMBER/events.lund
+#cp *.dat  $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+#cp *.bos    $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+#cp *.hbook  $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+#cp * $OUTDIR/$PROJ/JOB_$JOBNUMBER/
+#cp outfile1 $OUTDIR/$PROJ/JOB_$JOBNUMBER/

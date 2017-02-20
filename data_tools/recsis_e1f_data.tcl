@@ -2,25 +2,27 @@
 # new one:
 #source /group/clas/builds/test3/src/clas6-trunk/reconstruction/recsis/recsis_proc.tcl;
 # newer one:
-source /group/clas/builds/src/clas-trunk/reconstruction/recsis/recsis_proc.tcl;
+source /u/home/clase1-6/clas-trunk/reconstruction/recsis/recsis_proc.tcl;
+# source /group/clas/builds/src/clas-trunk/reconstruction/recsis/recsis_proc.tcl;
 #source /opt/programs/clas/builds/PRODUCTION/packages/tcl/recsis_proc.tcl;
 #
 # define packages
 turnoff ALL;
 global_section off;
-turnon seb trk cc tof egn lac user pid;
+turnon seb trk cc tof egn user pid;
 #turnon user;
 #
 
-inputfile Input;
+inputfile raw.bos;
 setc chist_filename histfile;
 setc log_file_name  logfile;
 #
-#
-setc outbanknames(1) "CC  CCPBCL01DC0 DCPBEC  EC1 ECPBECPCECPOEVNTFBPMHBLAHEADHEVTIC  ICPBICHBLCPBMVRTPARTSC  SCPBSCRCTBIDTBLATBTRTGBITRPBTDPL"; 
+# Banks from Mauri 
+setc outbanknames(1) "CCPBCL01DCPBEC1 ECPBECPCECPOEVNTFBPMHEADHEVTLCPBMVRTPARTSCPBSCRCTBERTBIDTBTRTGBITRPBTDPLTBLA";
+#setc outbanknames(1) "CC  CCPBCL01DC0 DCPBEC  EC1 ECPBECPCECPOEVNTFBPMHBLAHEADHEVTIC  ICPBICHBLCPBMVRTPARTSC  SCPBSCRCTBIDTBLATBTRTGBITRPBTDPL"; 
 #setc outbanknames(2) "CCPBCL01DCPBEC1 ECPBECPCECPOEVNTFBPMHEADHEVTICPBICHBLCPBMVRTPARTSCPBSCRCTBIDTBTRTGBITRPBTDPL"; 
 #setc outbanknames(3) "CCPBCL01DCPBEC1 ECPBECPCECPOEVNTFBPMHEADHEVTICPBICHBLCPBMVRTPARTSCPBSCRCTBIDTBTRTGBITRPBTDPL"; 
-outputfile outfile1 PROC1 2047;
+outputfile cooked.bos PROC1 2047;
 #outputfile outfile2 PROC2 2047;
 #outputfile outfile3 PROC3 2047;
 #
@@ -30,13 +32,18 @@ setc bfield_file_name  "bgrid_T67to33.fpk";
 #
 setc poltarget_field_file_name "bgrid_s.fpk";
 #
+set trigger_particle 11
+set ntswitch 1;
+set touch_id 0;
+
 set torus_current       2250;
 set mini_torus_current  6000;
 set TargetPos(3)       -25.0;
 #
 set ntswitch 1;
 
-#set dc_xvst_choice     0;
+set dc_xvst_choice     0;
+
 #
 #set touch_id 0;
 #set touch_id 1;  
@@ -89,7 +96,7 @@ set ldisplay_all $false;
 #
 setc rec_prompt "CLASCHEF_recsis> ";
 
-go 20000;
 #go 20000000;
+go 20000;
 status;
 exit_pend;

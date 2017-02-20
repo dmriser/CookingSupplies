@@ -1,0 +1,18 @@
+11.28.16	elast_gen	60	rebuild_jobs2	Pass	
+11.28.16	keppel_norad	60	rebuild_jobs3	Pass
+11.29.16	keppel_norad	150	rebuild_jobs4	Pass
+11.29.16	elast_gen	150	rebuild_jobs5	Pass
+11.29.16	clasdis		150	rebuild_jobs6	Failed
+11.29.16	clasdis		150	rebuild_jobs7	Failed
+11.29.16	clasdis		150	rebuild_jobs8	Passed	
+11.30.16	keppel_norad	5	rebuild_jobs9	Passed
+11.30.16	keppel_rad	5	rebuild_jobs10	Passed
+12.5.16		keppel_rad	100	debug_jobs0	Passed
+12.5.16		keppel_rad	5	debug_jobs1	Failed		Mauri's USER_ANA
+12.5.16		keppel_rad	5	debug_jobs1	Failed		Mauri's USER_ANA
+12.6.16		keppel_rad	5	debug_jobs1	Passed		Mauri's USER_ANA
+12.6.16		keppel_norad	5	debug_jobs2	Failed		Mauri's USER_ANA
+12.6.16		keppel_norad	5	debug_jobs3	Overtime	Mauri's USER_ANA + changes to .tcl
+12.6.16		keppel_norad	5	debug_jobs4	Overtime	Mauri's USER_ANA 
+12.7.16		keppel_rad	10	debug_jobs5	Passed		Mauri's USER_ANA 
+12.7.16		keppel_rad	50	debug_jobs6	Running		Mauri's USER_ANA 
