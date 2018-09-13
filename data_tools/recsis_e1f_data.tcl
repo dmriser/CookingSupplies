@@ -1,8 +1,8 @@
 # original source /u/group/clas/builds/release-4-14/packages/tcl/recsis_proc.tcl;
 # new one:
-#source /group/clas/builds/test3/src/clas6-trunk/reconstruction/recsis/recsis_proc.tcl;
+source /group/clas/builds/test3/src/clas6-trunk/reconstruction/recsis/recsis_proc.tcl;
 # newer one:
-source /u/home/clase1-6/clas-trunk/reconstruction/recsis/recsis_proc.tcl;
+#source /u/home/clase1-6/clas-trunk/reconstruction/recsis/recsis_proc.tcl;
 # source /group/clas/builds/src/clas-trunk/reconstruction/recsis/recsis_proc.tcl;
 #source /opt/programs/clas/builds/PRODUCTION/packages/tcl/recsis_proc.tcl;
 #
